@@ -1,0 +1,216 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
+const { JSDOM, VirtualConsole } = require('jsdom');
+const root = path.join(__dirname, '..');
+const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+const content = fs.readFileSync(path.join(root, 'content.js'), 'utf8');
+const workbook = fs.readFileSync(path.join(root, 'workbook.js'), 'utf8');
+const app = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
+const key = 'grapal-hub-v1';
+async function boot(seed, denyStorage = false) {
+  const errors = [];
+  const vc = new VirtualConsole();
+  vc.on('jsdomError', error => errors.push(error.message));
+  const dom = new JSDOM(html, { url: 'https://local.test/', runScripts: 'outside-only', virtualConsole: vc, pretendToBeVisual: true });
+  const w = dom.window;
+  w.structuredClone = structuredClone;
+  w.HTMLElement.prototype.scrollIntoView = function() {};
+  if (seed) w.localStorage.setItem(key, JSON.stringify(seed));
+  if (denyStorage) Object.defineProperty(w, 'localStorage', { get() { throw new Error('Storage blocked'); } });
+  vm.runInContext(content, dom.getInternalVMContext());
+  vm.runInContext(workbook, dom.getInternalVMContext());
+  vm.runInContext(app, dom.getInternalVMContext());
+  await new Promise(resolve => setTimeout(resolve, 40));
+  return { dom, w, d: w.document, errors };
+}
+function click(d, selector) {
+  const node = d.querySelector(selector);
+  assert.ok(node, `Missing control: ${selector}`);
+  node.click();
+}
+function fill(w, d, selector, value) {
+  const node = d.querySelector(selector);
+  assert.ok(node, `Missing field: ${selector}`);
+  node.value = value;
+  node.dispatchEvent(new w.Event('input', { bubbles: true }));
+}
+(async () => {
+  new vm.Script(app); new vm.Script(content); new vm.Script(workbook);
+  const { dom, w, d, errors } = await boot({ completed: { adhd: {0: true, 2: true} }, notes: {'adhd-0': 'Registro anterior'}, scales: {}, situation: '', wish: '' });
+  const catalog = vm.runInContext('journeyCatalog', dom.getInternalVMContext());
+  assert.equal(catalog.length, 17);
+  assert.equal(d.querySelectorAll('[data-open-journey]').length, 17);
+  assert.equal(d.querySelectorAll('[data-focus]').length, 17);
+  assert.ok(!/em revisão|em desenvolvimento|em preparação/i.test(d.querySelector('#jornadas').textContent));
+  const ids = [...d.querySelectorAll('[id]')].map(n => n.id);
+  assert.equal(ids.length, new Set(ids).size);
+  for (const asset of d.querySelectorAll('script[src],link[href^="./"]')) {
+    assert.ok(fs.existsSync(path.join(root, (asset.src || asset.href).split('/').pop())));
+  }
+  click(d, '[data-open-journey="adhd"]');
+  assert.equal(vm.runInContext('currentModule', dom.getInternalVMContext()), 1, 'Resume first unfinished module, not count');
+  click(d, '[data-module="0"]');
+  assert.equal(d.querySelector('#moduleNote').value, 'Registro anterior');
+  click(d, '#journeyModal [data-close-modal]');
+  for (const journey of catalog) {
+    assert.equal(journey.available, true);
+    assert.equal(journey.status, 'reviewed');
+    assert.equal(journey.modules.length, 6);
+    assert.ok(journey.sources.length >= 1);
+    assert.ok(journey.journal?.prompt && journey.journal.low && journey.journal.high);
+    const words = JSON.stringify(journey.modules).split(/\s+/).length;
+    assert.ok(words >= 550, `${journey.id} needs substantive content: ${words}`);
+    assert.ok(journey.modules.filter(m => m.check).length >= 2, `${journey.id} missing checkpoints`);
+    click(d, `[data-open-journey="${journey.id}"]`);
+    for (let i = 0; i < journey.modules.length; i++) {
+      const module = journey.modules[i];
+      for (const field of ['title','time','kicker','heading','intro','lesson','lessonText','prompt','placeholder']) assert.ok(module[field], `${journey.id}/${i} missing ${field}`);
+      click(d, `[data-module="${i}"]`);
+      assert.equal(d.querySelector('#moduleContent h3').textContent, module.heading);
+      assert.equal(d.querySelector('#view-learn').hidden, false);
+      assert.equal(d.querySelector('#view-practice').hidden, true);
+      assert.equal(module.teaching.length, 2);
+      assert.ok(module.diagram.nodes.length >= 3);
+      assert.equal(d.querySelectorAll('.concept-map li').length, module.diagram.nodes.length);
+      assert.equal(d.querySelectorAll('.worked-example dd').length, 4);
+      click(d, '#tab-practice');
+      assert.equal(d.querySelector('#view-practice').hidden, false);
+      assert.equal(d.querySelector('#view-learn').hidden, true);
+      assert.equal(module.worksheet.fields.length, 3);
+      for(let field = 0; field < 3; field++) fill(w,d,`#worksheetField${field}`,`Campo ${journey.id}/${i}/${field} <b>texto</b>`);
+      fill(w,d,'#worksheetWhen','Depois da aula');
+      fill(w,d,'#worksheetStatus','adapted');
+      fill(w,d,'#worksheetReview','Aprendi que preciso de um passo menor.');
+      fill(w, d, '#moduleNote', `Plano ${journey.id}/${i} <script>neverExecuted</script>`);
+      if (module.followup) fill(w, d, '#moduleReturn', `Retorno ${journey.id}/${i}`);
+      if (module.scale) {
+        assert.equal(d.querySelector('#moduleScale').value, '', 'Unanswered scale must remain missing');
+        d.querySelector('#moduleScale').value = '0';
+        d.querySelector('#moduleScale').dispatchEvent(new w.Event('change'));
+      }
+      if (module.check) {
+        assert.ok(module.check.answer >= 0 && module.check.answer < module.check.options.length);
+        click(d, `input[name="checkpoint"][value="${module.check.answer}"]`);
+        click(d, '#checkUnderstanding');
+        assert.ok(d.querySelector('#checkpointFeedback').textContent.startsWith('Isso mesmo.'));
+      }
+      click(d, '#completeModule');
+      assert.ok(JSON.parse(w.localStorage.getItem(key)).completed[journey.id][i]);
+    }
+    assert.equal(d.querySelector('#journeyProgressLabel').textContent, '6 de 6 etapas');
+    click(d,'#tab-journal');
+    assert.equal(d.querySelector('#journalValue').value, '', 'Never seed the journal with a score');
+    fill(w,d,'#journalValue','0');
+    fill(w,d,'#journalContext',`Contexto ${journey.id} <script>neverExecuted</script>`);
+    click(d,'#saveJournal');
+    assert.equal(d.querySelectorAll('[data-chart-value="0"]').length,1,'Zero is a real entry');
+    click(d, '#journeyModal [data-close-modal]');
+  }
+  assert.equal(d.querySelector('#headerProgress').textContent, '102 etapas');
+  click(d, '[data-filter="completed"]');
+  assert.equal(d.querySelectorAll('[data-open-journey]').length, 17);
+  click(d, '[data-filter="saved"]');
+  assert.ok(d.querySelector('.empty-state'));
+  click(d, '#startCheckin');
+  click(d, '[data-focus="grief"]');
+  click(d, '[data-goal]');
+  assert.equal(d.querySelector('#recommendation h3').textContent, 'Luto');
+  click(d, '#openRecommended');
+  click(d, '.journey-help');
+  assert.equal(d.querySelectorAll('.modal-backdrop.open').length, 2);
+  assert.equal(d.querySelector('#journeyModal').inert, true);
+  click(d, '#helpModal [data-close-modal]');
+  assert.equal(d.querySelector('#journeyModal').inert, false);
+  assert.equal(d.body.style.overflow, 'hidden');
+  click(d, '#journeyModal [data-close-modal]');
+  const persisted = JSON.parse(w.localStorage.getItem(key));
+  const second = await boot(persisted);
+  click(second.d, '[data-open-journey="adhd"]');
+  assert.equal(second.d.querySelector('#moduleNote').value, 'Plano adhd/0 <script>neverExecuted</script>');
+  assert.equal(second.d.querySelector('#moduleContent script'), null, 'User notes are text, never markup');
+  assert.equal(second.d.querySelector('#journeyProgressLabel').textContent, '6 de 6 etapas');
+  assert.equal(second.d.querySelector('#worksheetField0').value,'Campo adhd/0/0 <b>texto</b>');
+  assert.equal(second.d.querySelector('#worksheetReview').value,'Aprendi que preciso de um passo menor.');
+  assert.equal(second.d.querySelector('#worksheetStatus').value,'adapted');
+  click(second.d,'#tab-journal');
+  assert.equal(second.d.querySelectorAll('[data-chart-value="0"]').length,1);
+  assert.equal(second.d.querySelector('#journalRecords script'),null);
+  assert.equal(second.d.querySelector('#journalContext').value,'Contexto adhd <script>neverExecuted</script>');
+  // Diary records can be edited, deleted and kept without a score. Chart gaps are calendar gaps.
+  second.w.confirm = () => true;
+  click(second.d,'[data-delete-entry]');
+  const relativeDate = days => { const date = new Date(); date.setDate(date.getDate()+days); return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`; };
+  const diary = second.d, diaryWindow = second.w;
+  for(const [offset,value] of [[-5,'0'],[-4,'5'],[-3,''],[-2,'10']]) {
+    click(diary,'#newJournal');
+    fill(diaryWindow,diary,'#journalDate',relativeDate(offset));
+    fill(diaryWindow,diary,'#journalValue',value);
+    fill(diaryWindow,diary,'#journalContext',`Dia ${offset}`);
+    click(diary,'#saveJournal');
+  }
+  assert.equal(diary.querySelectorAll('.chart-point').length,3,'Note-only entry must not become zero');
+  assert.equal(diary.querySelectorAll('.chart-line').length,1,'No interpolation over missing measurements');
+  assert.equal(diary.querySelectorAll('[data-edit-entry]').length,4);
+  click(diary,`[data-edit-entry="${relativeDate(-4)}"]`);
+  fill(diaryWindow,diary,'#journalValue','6');
+  diaryWindow.confirm = () => false;
+  click(diary,`[data-edit-entry="${relativeDate(-5)}"]`);
+  assert.equal(diary.querySelector('#journalDate').value,relativeDate(-4),'Keep changed draft when switching edit is cancelled');
+  assert.equal(diary.querySelector('#journalValue').value,'6');
+  diaryWindow.confirm = () => true;
+  click(diary,'#saveJournal');
+  assert.equal(diary.querySelectorAll('[data-edit-entry]').length,4,'Editing does not duplicate records');
+  assert.equal(diary.querySelectorAll('[data-chart-value="6"]').length,1);
+  fill(diaryWindow,diary,'#journalDate',relativeDate(-6));
+  click(diary,'#saveJournal');
+  assert.equal(diary.querySelectorAll('[data-edit-entry]').length,4,'Correcting a date moves the entry');
+  assert.equal(diary.querySelector(`[data-edit-entry="${relativeDate(-4)}"]`),null);
+  click(diary,`[data-delete-entry="${relativeDate(-6)}"]`);
+  assert.equal(diary.querySelectorAll('.chart-line').length,0);
+  click(diary,'#newJournal');
+  click(diary,'#saveJournal');
+  assert.ok(diary.querySelector('#journalMessage').textContent.includes('Acrescente'));
+  fill(diaryWindow,diary,'#journalDate',relativeDate(1));
+  fill(diaryWindow,diary,'#journalContext','Data futura');
+  diary.querySelector('#journalForm').dispatchEvent(new diaryWindow.Event('submit',{bubbles:true,cancelable:true}));
+  assert.ok(diary.querySelector('#journalMessage').textContent.includes('data válida'));
+  assert.equal(diary.querySelectorAll('[data-edit-entry]').length,3);
+  click(diary,'#tab-learn');
+  diary.querySelector('#tab-learn').dispatchEvent(new diaryWindow.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));
+  assert.equal(diary.querySelector('#tab-practice').getAttribute('aria-selected'),'true');
+  assert.equal(diary.activeElement.id,'tab-practice');
+  click(diary,'[data-module="1"]');
+  click(diary,'#tab-journal');
+  assert.equal(diary.querySelectorAll('[data-edit-entry]').length,3,'Journal spans all modules in a journey');
+  diaryWindow.innerWidth = 390;
+  diaryWindow.dispatchEvent(new diaryWindow.Event('resize'));
+  assert.equal(diary.querySelector('#moduleList').inert,true);
+  assert.equal(diary.querySelector('#moduleContent').inert,false);
+  click(diary,'#journeyBack');
+  assert.equal(diary.querySelector('#moduleList').inert,false);
+  assert.equal(diary.querySelector('#moduleContent').inert,true);
+  diaryWindow.innerWidth = 1100;
+  diaryWindow.dispatchEvent(new diaryWindow.Event('resize'));
+  assert.equal(diary.querySelector('#moduleContent').inert,false);
+  click(diary,'#journeyModal [data-close-modal]');
+  click(diary,'#clearData');
+  assert.equal(diaryWindow.localStorage.getItem(key),null);
+  assert.equal(vm.runInContext('Object.keys(state.workbooks).length + Object.keys(state.journals).length + Object.keys(state.journalDrafts).length',second.dom.getInternalVMContext()),0,'Deleting records must not restore mutated defaults');
+  assert.ok(Object.keys(persisted.returns).length > 0);
+  const denied = await boot(undefined, true);
+  click(denied.d, '[data-open-journey="anxiety"]');
+  fill(denied.w, denied.d, '#moduleNote', 'Sessão sem armazenamento');
+  fill(denied.w,denied.d,'#worksheetField0','Caderno sem armazenamento');
+  assert.ok(!denied.d.querySelector('#storageWarning').classList.contains('hidden'));
+  click(denied.d, '#completeModule');
+  assert.equal(denied.d.querySelector('#journeyProgressLabel').textContent, '1 de 6 etapas');
+  click(denied.d,'#journeyModal [data-close-modal]');
+  denied.w.confirm = () => true;
+  click(denied.d,'#clearData');
+  assert.ok(denied.d.querySelector('#storageWarning').textContent.includes('Não foi possível apagar'));
+  assert.deepEqual([...errors, ...second.errors, ...denied.errors], []);
+  console.log(JSON.stringify({ journeys: 17, stages: 102, worksheets: Object.keys(persisted.workbooks).length, journalTypes: Object.keys(persisted.journals).length, checks: Object.keys(persisted.checks).length, afterPracticeRecords: Object.keys(persisted.returns).length, legacyNotes: 'preserved', reload: 'passed', diaryEditing: 'passed', chartZeroAndGaps: 'passed', storageBlocked: 'graceful', errors: 0 }));
+  dom.window.close(); second.dom.window.close(); denied.dom.window.close();
+})().catch(error => { console.error(error); process.exit(1); });
