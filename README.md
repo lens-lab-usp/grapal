@@ -1,77 +1,97 @@
-# GRAPAL — Jornadas de saúde mental
+# Site do GRAPAL
 
-Site autoguiado para universitários adultos, com 17 jornadas e 102 etapas. Inclui explicações, exemplos comentados, diagramas, fichas de prática, checkpoints, progresso e diários opcionais com gráficos dos próprios registros.
+Site do GRAPAL (Grupo de Assistência Psicológica ao Aluno), serviço de saúde mental da
+Faculdade de Medicina da Universidade de São Paulo. O conteúdo segue os manuais do serviço
+(Manual do Aluno e Manual do Residente, versão 1.000), e a identidade visual é a mesma dos
+manuais e do Manual da Marca FMUSP.
 
-O material pode preceder ou complementar a psicoterapia individual. Não oferece avaliação individualizada, diagnóstico, prescrição ou monitoramento profissional das respostas.
+Endereço: **https://grapal.fm.usp.br** (publicado pelo GitHub Pages).
 
-## Colocar no GitHub
+## Estrutura
 
-1. Descompacte `GRAPAL_GitHub.zip` no computador.
-2. No GitHub, crie um repositório, por exemplo `grapal-jornadas`, e selecione **Private**. Para evitar um README duplicado, deixe desmarcada a opção de criar um README na abertura do repositório.
-3. Abra o repositório e use **uploading an existing file** na página inicial ou **Add file → Upload files** quando essa opção estiver disponível.
-4. Arraste os arquivos e a pasta `tests` que estão **dentro** da pasta `grapal-jornadas`. O arquivo `index.html` deve ficar na raiz do repositório. Não envie apenas o ZIP: ele precisa ser descompactado primeiro.
-5. Confirme o envio com uma mensagem como `Adicionar site GRAPAL`.
+É uma página única (`index.html`), dividida em seções com endereço próprio, que podem ser
+usadas em links diretos:
 
-Arquivos cujo nome começa com ponto podem estar ocultos no computador. Eles são auxiliares; os cinco arquivos essenciais do site são `index.html`, `styles.css`, `content.js`, `workbook.js` e `app.js`.
+| Seção | Endereço |
+|---|---|
+| Início | `/#inicio` |
+| Como falar com o GRAPAL | `/#contato` |
+| O que acontece quando você procura | `/#como-funciona` |
+| Para quem é da graduação (inclui psicoterapia breve) | `/#graduacao` e `/#psicoterapia` |
+| Para residentes | `/#residentes` |
+| Sigilo | `/#sigilo` |
+| Se alguém se preocupa com você | `/#preocupacao` |
+| Urgência e emergência | `/#urgencia` |
+| Dúvidas frequentes | `/#duvidas` |
+| Outros apoios na FMUSP | `/#apoios` |
+| Equipe | `/#equipe` |
+| Manuais em PDF | `/#manuais` |
 
-Esses passos guardam o código no GitHub. Nenhum fluxo de publicação automática foi incluído.
+Outros arquivos: `assets/site.css` (aparência), `assets/site.js` (comportamento),
+`assets/fonts/` (fontes), `fotos/` (equipe, 320 × 320 px), `manuais/` (PDFs),
+`404.html` (endereço não encontrado).
 
-Referência: [adicionar arquivos a um repositório — documentação do GitHub](https://docs.github.com/en/repositories/working-with-files/managing-files/adding-a-file-to-a-repository).
+O site é HTML, CSS e um pouco de JavaScript, sem bibliotecas, sem banco de dados e sem nenhum
+recurso de fora. **Não usa cookies e não coleta dados de quem visita.** Sem JavaScript, todo o
+conteúdo continua aparecendo; só deixam de funcionar a animação e o destaque "Agora" da urgência.
 
-## Acesso privado e hospedagem
+## Como alterar
 
-**Repositório privado e site privado são configurações diferentes.** O controle de acesso da hospedagem atual não faz parte destes arquivos HTML e JavaScript. Esta exportação não inclui um sistema próprio de login.
+Toda alteração na ramificação `main` entra no ar sozinha em um ou dois minutos. Dá para editar
+pelo próprio site do GitHub: abra o arquivo, clique no lápis, altere e clique em **Commit changes**.
 
-Mantenha o repositório privado e não ative o GitHub Pages se ainda não tiver definido a proteção de acesso ao site. Segundo a documentação do GitHub, publicar Pages com controle de acesso privado exige uma organização com GitHub Enterprise Cloud e um site de projeto elegível. Um repositório privado isoladamente não basta.
+**Contatos.** O e-mail e o WhatsApp aparecem em vários pontos (botões do início, seção de
+contato, caixa "Para quem está preocupado" e rodapé). Use a busca no arquivo pelo número ou
+pelo e-mail e altere todas as ocorrências. O link do WhatsApp tem o formato
+`https://wa.me/5511987440393`.
 
-Para hospedar em outro serviço, use os cinco arquivos do site em uma hospedagem estática com autenticação ou restrição de acesso configurada no servidor/provedor. Todos os arquivos, inclusive `content.js`, precisam ficar atrás dessa proteção. Uma senha escrita no JavaScript não protege o conteúdo.
+**Equipe.** Cada pessoa aparece em dois lugares de `index.html`: no mosaico de fotos do início
+(bloco `faces-grid`) e na seção Equipe (listas `people`). Suba a foto em `fotos/` (quadrada,
+de preferência 320 × 320 px, nome em minúsculas e sem acento, como `nome-sobrenome.jpg`) e copie
+um item existente nos dois lugares, trocando arquivo, nome e função. Na seção Equipe, o registro
+profissional fica na linha `p-reg` e a minibio no parágrafo `p-bio`; quem não tem um ou outro
+fica só com nome e função (basta apagar a linha). Para retirar alguém, apague os dois itens e a foto.
 
-Não é necessário fazer build. O diretório público é a raiz desta pasta; se a hospedagem solicitar um comando de build, ele pode ficar vazio. O site usa caminhos relativos e pode ser servido sob um subdiretório.
+**Aviso de novidade.** O selo "Novo" no topo do início (consultas on-line) é o link `news`, logo no
+começo da seção Início de `index.html`. Para tirá-lo, apague esse link; o texto completo continua na
+caixa "Novo: consultas on-line" (`#online`), na seção de contato, e nas dúvidas frequentes.
 
-Referências: [o que é GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages) e [visibilidade e acesso privado](https://docs.github.com/en/enterprise-cloud@latest/pages/getting-started-with-github-pages/changing-the-visibility-of-your-github-pages-site).
+**Manuais.** Suba o PDF novo em `manuais/` com o mesmo nome do antigo
+(`manual-do-aluno-grapal.pdf` ou `manual-do-residente-grapal.pdf`) e ajuste a versão escrita
+na seção Manuais.
 
-## Usar no próprio computador
+**Data de atualização.** Fica no rodapé ("Atualizado em ...").
 
-O site funciona sem conta do ChatGPT, chave de API, banco de dados ou dependências JavaScript externas. Para uma prévia local consistente, use um servidor HTTP local. Se tiver Python 3 instalado, abra o terminal na pasta `grapal-jornadas` e execute:
+## O destaque "Agora" na urgência
 
-```bash
-python3 -m http.server 8000 --bind 127.0.0.1
-```
+Na seção de urgência, o site marca qual dos dois locais procurar naquele momento, pelo horário
+de São Paulo, seguindo a regra dos manuais: dias úteis, das 8h às 17h, pronto-atendimento do
+CeAC; noites, fins de semana e feriados, Unidade de Emergência Referenciada (UER-ICHC). Os dois
+locais aparecem sempre; o destaque só
+indica o do momento.
 
-Abra `http://127.0.0.1:8000` no navegador. Para encerrar, pressione `Ctrl+C` no terminal. Esse comando fica limitado ao próprio computador.
+Quando há dúvida, o site indica a UER-ICHC. Contam como dia não útil os feriados nacionais, o
+9 de julho (estadual), o 25 de janeiro (municipal), carnaval (segunda e terça), Quarta-feira de
+Cinzas, Sexta-feira Santa, Corpus Christi, 24 e 31 de dezembro. As datas móveis são calculadas
+a partir da Páscoa de cada ano, então não precisam ser atualizadas. Para incluir uma data fixa,
+edite a lista `fixos` em `assets/site.js` (formato mês-dia, por exemplo `'11-20'`).
 
-## Anotações e progresso
+## Endereço próprio (grapal.fm.usp.br)
 
-- Os registros ficam em `localStorage`, no navegador e no endereço em que o site é utilizado.
-- As anotações dos usuários não estão neste pacote. Não há banco de respostas no repositório.
-- Mudar de endereço, navegador ou dispositivo não transfere os registros anteriores. Eles permanecem vinculados ao endereço original, enquanto o navegador os conservar.
-- Não há sincronização, envio à universidade, acompanhamento em tempo real ou cópia de segurança automática.
-- Em computadores compartilhados, quem tiver acesso ao mesmo perfil do navegador pode ler os registros. O site oferece a opção de apagar os dados locais.
-- Os números dos diários são registros pessoais não validados, sem interpretação diagnóstica; os gráficos mantêm lacunas quando não há respostas.
+O endereço da FMUSP funciona como no site do LENS (`lens.fm.usp.br`): a TI cria um registro de
+DNS do tipo CNAME apontando `grapal.fm.usp.br` para `lens-lab-usp.github.io`.
 
-## Arquivos e edição
+A ordem importa. **Só depois** que a TI confirmar o registro:
 
-| Arquivo | Conteúdo |
-| --- | --- |
-| `index.html` | Página inicial, navegação e estrutura dos diálogos |
-| `content.js` | As 17 jornadas, referências, exemplos, fichas e configurações dos diários |
-| `app.js` | Navegação, progresso, notas, checkpoints e estado local |
-| `workbook.js` | Cadernos de prática, diários e gráficos |
-| `styles.css` | Estilo visual e adaptação a telas pequenas |
-| `tests/smoke.cjs` | Verificação funcional automatizada |
-| `package.json` e `package-lock.json` | Dependência utilizada apenas para executar os testes |
+1. Em **Settings → Pages**, preencha *Custom domain* com `grapal.fm.usp.br` e salve (o GitHub
+   cria sozinho o arquivo `CNAME` no repositório).
+2. Espere a verificação do DNS e marque **Enforce HTTPS** quando a opção liberar.
 
-Para preservar anotações já salvas, mantenha os identificadores das jornadas e a ordem das etapas ao editar o conteúdo. Alterar o significado de uma posição pode associar notas antigas a uma etapa diferente. A chave de armazenamento atual é `grapal-hub-v1`.
+Se o domínio for configurado antes de o registro existir, o endereço do GitHub passa a
+redirecionar para um domínio que ainda não responde, e o site fica fora do ar até o DNS ser criado.
 
-## Verificação para quem desenvolve
+## Licenças
 
-Os arquivos do site não exigem Node.js para funcionar. Os testes opcionais usam Node.js 24.15 ou posterior da série 24, ou Node.js 26+, e jsdom 30.1.0.
-
-```bash
-npm ci --ignore-scripts
-npm test
-```
-
-Os testes percorrem as 17 jornadas e 102 etapas, verificando anotações, fichas, retomada, checkpoints, edição de datas, exclusão de registros, ausência de números no gráfico e comportamento quando o armazenamento está bloqueado. São testes de lógica e DOM; não substituem uma inspeção visual em navegadores nem uma validação clínica da plataforma.
-
-Esta exportação preserva os arquivos funcionais da versão ampliada. Configurações da hospedagem anterior, credenciais, histórico Git e dados pessoais de navegação foram excluídos.
+As fontes Zilla Slab (Mozilla Foundation) e Source Sans 3 (Adobe) são distribuídas sob a SIL
+Open Font License 1.1; os textos das licenças estão em `assets/fonts/`. Os ícones são do
+conjunto Lucide (licença ISC), com o texto da licença em `assets/LICENCA-icones-lucide-ISC.txt`.
