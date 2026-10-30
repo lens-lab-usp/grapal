@@ -26,13 +26,14 @@ usadas em links diretos:
 | Outros apoios na FMUSP | `/#apoios` |
 | Equipe | `/#equipe` |
 | Manuais em PDF | `/#manuais` |
+| Queremos te ouvir (formulário de opinião) | `/#ouvir` |
 
 Outros arquivos: `assets/site.css` (aparência), `assets/site.js` (comportamento),
 `assets/fonts/` (fontes), `fotos/` (equipe, 320 × 320 px), `manuais/` (PDFs),
 `404.html` (endereço não encontrado).
 
 O site é HTML, CSS e um pouco de JavaScript, sem bibliotecas, sem banco de dados e sem nenhum
-recurso de fora. **Não usa cookies e não coleta dados de quem visita.** Sem JavaScript, todo o
+recurso de fora (só o formulário de opinião envia a mensagem para o Google, ver abaixo). **Não usa cookies e não coleta dados de quem visita.** Sem JavaScript, todo o
 conteúdo continua aparecendo; só deixam de funcionar a animação e o destaque "Agora" da urgência.
 
 ## Como alterar
@@ -81,6 +82,60 @@ Quando há dúvida, o site indica a UER-ICHC. Contam como dia não útil os feri
 Cinzas, Sexta-feira Santa, Corpus Christi, 24 e 31 de dezembro. As datas móveis são calculadas
 a partir da Páscoa de cada ano, então não precisam ser atualizadas. Para incluir uma data fixa,
 edite a lista `fixos` em `assets/site.js` (formato mês-dia, por exemplo `'11-20'`).
+
+## Formulário "Queremos te ouvir"
+
+A seção `#ouvir` tem um formulário para alunos e residentes darem opinião sobre o serviço. Quem escreve
+escolhe se quer se identificar. O site não guarda nada: o formulário manda os campos para um pequeno
+script do Google (Google Apps Script) publicado na conta USP do coordenador, e o script encaminha cada
+mensagem por e-mail para essa mesma conta.
+
+- O endereço do script fica no atributo `action` do formulário `form-ouvir`, em `index.html`.
+- Para trocar quem recebe, publique o script abaixo em outra conta (script.google.com → Novo projeto →
+  colar o código → Implantar → Nova implantação → App da Web, executar como "Eu", acesso "Qualquer
+  pessoa") e troque o endereço no `action`.
+- O campo invisível `site` serve contra robôs: mensagens com ele preenchido são descartadas.
+
+```js
+/**
+ * GRAPAL · "Queremos te ouvir"
+ * Recebe as mensagens do formulário do site e as encaminha por e-mail para a conta
+ * que publicou este script. Nada fica guardado: a mensagem só passa por aqui.
+ */
+function doPost(e) {
+  try {
+    return envia((e && e.parameter) || {});
+  } catch (err) {
+    console.error('Falha ao encaminhar a mensagem: ' + err);
+    return ContentService.createTextOutput('erro: ' + err);
+  }
+}
+
+function envia(p) {
+  var limpa = function (v, n) { return String(v || '').trim().slice(0, n); };
+  var mensagem = limpa(p.mensagem, 5000);
+  // "site" é um campo invisível do formulário: só robôs o preenchem
+  if (!mensagem || p.site) return ContentService.createTextOutput('ok');
+  var tipo = limpa(p.tipo, 40), nome = limpa(p.nome, 200), contato = limpa(p.contato, 200);
+  var quem = (nome || contato) ? [nome, contato].filter(String).join(' / ') : 'não se identificou';
+  var opcoes = {
+    to: Session.getEffectiveUser().getEmail(),
+    subject: 'GRAPAL: Queremos te ouvir' + (tipo ? ' (' + tipo + ')' : ''),
+    body: 'Nova mensagem do formulário "Queremos te ouvir" do site do GRAPAL.\n\n'
+      + (tipo ? 'Sobre: ' + tipo + '\n' : '')
+      + 'Identificação: ' + quem + '\n\n'
+      + mensagem + '\n',
+    name: 'Site do GRAPAL'
+  };
+  if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(contato)) opcoes.replyTo = contato;
+  MailApp.sendEmail(opcoes);
+  return ContentService.createTextOutput('ok');
+}
+
+function doGet() {
+  return ContentService.createTextOutput('Formulário do GRAPAL ativo.');
+}
+```
 
 ## Endereço próprio (grapal.fm.usp.br)
 

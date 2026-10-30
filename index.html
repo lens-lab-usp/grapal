@@ -20,7 +20,7 @@
   <meta property="og:image:height" content="630">
   <link rel="preload" href="assets/fonts/zilla-slab-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-sans-3-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/site.css?v=a01ad8e4">
+  <link rel="stylesheet" href="assets/site.css?v=0fc984da">
   <script>document.documentElement.className += ' js';</script>
 </head>
 <body>
@@ -550,6 +550,47 @@
       </div>
     </section>
 
+    <!-- ============================================================ QUEREMOS TE OUVIR -->
+    <section class="sec" id="ouvir" aria-labelledby="t-ouvir">
+      <div class="wrap">
+        <div class="ouvir">
+          <div class="ouvir-txt reveal">
+            <div class="sec-head">
+              <p class="kicker">Sua opinião</p>
+              <h2 id="t-ouvir">Queremos te ouvir</h2>
+              <p class="intro">Conte como está sendo o GRAPAL para você: o que funcionou, o que não funcionou e o que podemos melhorar. Elogios, críticas e sugestões chegam direto à coordenação e ajudam a melhorar o serviço.</p>
+            </div>
+            <ul class="ouvir-pts">
+              <li><svg class="ic" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="8" r="5" /><path d="M20 21a8 8 0 0 0-16 0" /></svg><span><b>Fique à vontade para se identificar.</b> Com seu nome e um contato, conseguimos te dar um retorno sobre o que foi feito a partir da sua mensagem.</span></li>
+              <li><svg class="ic" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49" /><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242" /><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143" /><path d="m2 2 20 20" /></svg><span><b>Se preferir, não se identifique.</b> Sem nome nem contato, a mensagem chega anônima.</span></li>
+              <li><svg class="ic" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg><span><b>Este espaço não é para pedir atendimento.</b> Para agendar, use o <a href="#contato">WhatsApp ou o e-mail</a>. Em urgência, <a href="#urgencia">veja onde ir agora</a>.</span></li>
+            </ul>
+          </div>
+          <form class="form reveal d1" id="form-ouvir" action="https://script.google.com/macros/s/AKfycbxWllB8aH-VHv15u6u5Eq3-YqbJq1m9nMD2I-sw96CaGExSz6hfMktW5V1KUnrw7aZyTg/exec" method="post" target="_blank">
+            <fieldset class="tipos">
+              <legend>Sobre o quê? <span class="opc">(opcional)</span></legend>
+              <label><input type="radio" name="tipo" value="Elogio"><span>Elogio</span></label>
+              <label><input type="radio" name="tipo" value="Crítica"><span>Crítica</span></label>
+              <label><input type="radio" name="tipo" value="Sugestão"><span>Sugestão</span></label>
+              <label><input type="radio" name="tipo" value="Outro"><span>Outro</span></label>
+            </fieldset>
+            <label for="ouvir-msg">Sua mensagem</label>
+            <textarea id="ouvir-msg" name="mensagem" rows="6" maxlength="5000" required placeholder="Escreva do jeito que preferir."></textarea>
+            <div class="opcional">
+              <p class="opc-t">Quer se identificar? <span class="opc">(opcional, para podermos te responder)</span></p>
+              <div class="row">
+                <div><label for="ouvir-nome">Nome</label><input id="ouvir-nome" name="nome" type="text" autocomplete="name" maxlength="200"></div>
+                <div><label for="ouvir-contato">E-mail ou telefone</label><input id="ouvir-contato" name="contato" type="text" autocomplete="email" maxlength="200"></div>
+              </div>
+            </div>
+            <div class="hp" aria-hidden="true"><label>Não preencha este campo <input name="site" type="text" tabindex="-1" autocomplete="off"></label></div>
+            <button type="submit" class="btn btn-green"><svg class="ic" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" /><path d="m21.854 2.147-10.94 10.939" /></svg>Enviar mensagem</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer class="site-foot">
@@ -563,6 +604,7 @@
         <p><a href="mailto:grapal@usp.br">grapal@usp.br</a></p>
         <p>WhatsApp <a href="https://wa.me/5511987440393">(11) 98744-0393</a></p>
         <p>Dias úteis, das 8h às 17h.</p>
+        <p><a href="#ouvir">Queremos te ouvir</a></p>
       </div>
       <div class="f-urg">
         <h2>Em urgência</h2>
@@ -578,11 +620,11 @@
     <div class="wrap">
       <div class="base">
         <span>GRAPAL · Faculdade de Medicina da Universidade de São Paulo · Atualizado em outubro de 2026.</span>
-        <span>Este site não usa cookies nem coleta dados de quem visita.</span>
+        <span>Este site não usa cookies nem coleta dados de quem visita. O formulário de opinião envia só o que você escrever.</span>
       </div>
     </div>
   </footer>
 
-  <script src="assets/site.js?v=a01ad8e4" defer></script>
+  <script src="assets/site.js?v=0fc984da" defer></script>
 </body>
 </html>
