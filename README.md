@@ -39,6 +39,9 @@ conteúdo continua aparecendo; só deixam de funcionar a animação e o destaque
 
 Toda alteração na ramificação `main` entra no ar sozinha em um ou dois minutos. Dá para editar
 pelo próprio site do GitHub: abra o arquivo, clique no lápis, altere e clique em **Commit changes**.
+Se depois disso a página ainda parecer a antiga, recarregue ignorando o cache (Ctrl+Shift+R, ou
+Cmd+Shift+R no Mac). Os endereços de `site.css` e `site.js` em `index.html` levam um `?v=...`: ao
+alterar um desses dois arquivos, mude esse número nas duas linhas para o navegador baixar a versão nova.
 
 **Contatos.** O e-mail e o WhatsApp aparecem em vários pontos (botões do início, seção de
 contato, caixa "Para quem está preocupado" e rodapé). Use a busca no arquivo pelo número ou
@@ -48,9 +51,12 @@ pelo e-mail e altere todas as ocorrências. O link do WhatsApp tem o formato
 **Equipe.** Cada pessoa aparece em dois lugares de `index.html`: no mosaico de fotos do início
 (bloco `faces-grid`) e na seção Equipe (listas `people`). Suba a foto em `fotos/` (quadrada,
 de preferência 320 × 320 px, nome em minúsculas e sem acento, como `nome-sobrenome.jpg`) e copie
-um item existente nos dois lugares, trocando arquivo, nome e função. Na seção Equipe, o registro
-profissional fica na linha `p-reg` e a minibio no parágrafo `p-bio`; quem não tem um ou outro
-fica só com nome e função (basta apagar a linha). Para retirar alguém, apague os dois itens e a foto.
+um item existente nos dois lugares, trocando arquivo, nome e função. Na seção Equipe, quem tem
+mini currículo é um botão (`p-btn`) seguido do bloco `p-cv`, com o registro profissional (`p-reg`),
+o texto em um parágrafo e, se houver, links (como o Google Scholar) no parágrafo `p-links`; clicar
+na foto ou no nome abre esse conteúdo numa janela. Quem ainda não
+tem mini currículo fica só com foto, nome e função, sem botão: copie o item de alguém que tem para
+incluir o texto. Para retirar alguém, apague os dois itens e a foto.
 
 **Aviso de novidade.** O selo "Novo" no topo do início (consultas on-line) é o link `news`, logo no
 começo da seção Início de `index.html`. Para tirá-lo, apague esse link; o texto completo continua na

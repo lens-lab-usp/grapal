@@ -20,7 +20,7 @@
   <meta property="og:image:height" content="630">
   <link rel="preload" href="assets/fonts/zilla-slab-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-sans-3-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/site.css">
+  <link rel="stylesheet" href="assets/site.css?v=a01ad8e4">
   <script>document.documentElement.className += ' js';</script>
 </head>
 <body>
@@ -75,19 +75,19 @@
           </ul>
         </div>
         <div class="faces reveal d2">
-          <div class="faces-grid" role="img" aria-label="Fotos da equipe do GRAPAL">
-            <img src="fotos/arthur-caye.jpg" alt="" width="116" height="116">
-            <img src="fotos/bianca-brunelli-eduardo.jpg" alt="" width="116" height="116">
-            <img src="fotos/rodrigo-alves-rocha.jpg" alt="" width="116" height="116">
-            <img src="fotos/eduardo-de-castro-humes.jpg" alt="" width="116" height="116">
-            <img src="fotos/anne-caroline-dias-silva.jpg" alt="" width="116" height="116">
-            <img src="fotos/lucas-ito-suguikawa.jpg" alt="" width="116" height="116">
-            <img src="fotos/marina-gordon.jpg" alt="" width="116" height="116">
-            <img src="fotos/thais-cristina-goncalves-barbieri.jpg" alt="" width="116" height="116">
-            <img src="fotos/thiago-izumi.jpg" alt="" width="116" height="116">
-            <img src="fotos/natalia-de-oliveira-giotto.jpg" alt="" width="116" height="116">
-            <img src="fotos/thamires-nunes-nascimento.jpg" alt="" width="116" height="116">
-            <img src="fotos/suzane-brunhara-dos-santos.jpg" alt="" width="116" height="116">
+          <div class="faces-grid">
+            <a class="face" href="#p-arthur-caye" data-nome="Arthur Caye" aria-label="Arthur Caye, Coordenador geral"><img src="fotos/arthur-caye.jpg" alt="" width="116" height="116"></a>
+            <a class="face" href="#p-bianca-brunelli-eduardo" data-nome="Bianca Brunelli Eduardo" aria-label="Bianca Brunelli Eduardo, Coordenadora clínica"><img src="fotos/bianca-brunelli-eduardo.jpg" alt="" width="116" height="116"></a>
+            <a class="face" href="#p-rodrigo-alves-rocha" data-nome="Rodrigo Alves da Rocha" aria-label="Rodrigo Alves da Rocha, Coordenador administrativo"><img src="fotos/rodrigo-alves-rocha.jpg" alt="" width="116" height="116"></a>
+            <a class="face" href="#p-eduardo-de-castro-humes" data-nome="Eduardo de Castro Humes" aria-label="Eduardo de Castro Humes, Conselheiro"><img src="fotos/eduardo-de-castro-humes.jpg" alt="" width="116" height="116"></a>
+            <a class="face" href="#p-anne-caroline-dias-silva" data-nome="Anne Caroline Dias Silva" aria-label="Anne Caroline Dias Silva, Psiquiatra"><img src="fotos/anne-caroline-dias-silva.jpg" alt="" width="116" height="116"></a>
+            <a class="face" href="#p-lucas-ito-suguikawa" data-nome="Lucas Ito Suguikawa" aria-label="Lucas Ito Suguikawa, Psiquiatra"><img src="fotos/lucas-ito-suguikawa.jpg" alt="" width="116" height="116"></a>
+            <a class="face" href="#p-marina-gordon" data-nome="Marina Gordon" aria-label="Marina Gordon, Psiquiatra"><img src="fotos/marina-gordon.jpg" alt="" width="116" height="116"></a>
+            <a class="face" href="#p-thais-cristina-goncalves-barbieri" data-nome="Thaís Cristina Gonçalves Barbieri" aria-label="Thaís Cristina Gonçalves Barbieri, Psiquiatra"><img src="fotos/thais-cristina-goncalves-barbieri.jpg" alt="" width="116" height="116"></a>
+            <a class="face" href="#p-thiago-izumi" data-nome="Thiago Izumi" aria-label="Thiago Izumi, Psiquiatra"><img src="fotos/thiago-izumi.jpg" alt="" width="116" height="116"></a>
+            <a class="face" href="#p-natalia-de-oliveira-giotto" data-nome="Natália de Oliveira Giotto" aria-label="Natália de Oliveira Giotto, Psicóloga"><img src="fotos/natalia-de-oliveira-giotto.jpg" alt="" width="116" height="116"></a>
+            <a class="face" href="#p-thamires-nunes-nascimento" data-nome="Thamires Nunes Nascimento" aria-label="Thamires Nunes Nascimento, Psicóloga"><img src="fotos/thamires-nunes-nascimento.jpg" alt="" width="116" height="116"></a>
+            <a class="face" href="#p-suzane-brunhara-dos-santos" data-nome="Suzane Brunhara dos Santos" aria-label="Suzane Brunhara dos Santos, Enfermeira"><img src="fotos/suzane-brunhara-dos-santos.jpg" alt="" width="116" height="116"></a>
           </div>
           <p class="faces-cap">Quem cuida do atendimento. <a href="#equipe">Conheça a equipe</a></p>
         </div>
@@ -463,67 +463,60 @@
         </div>
         <p class="group-k reveal">Coordenação e conselho</p>
         <ul class="people">
-          <li class="person reveal">
-            <img src="fotos/arthur-caye.jpg" alt="" width="112" height="112" loading="lazy">
-            <div class="p-head"><b>Arthur Caye</b><span class="p-role">Coordenador geral</span></div>
-            <p class="p-bio">Psiquiatra da infância e da adolescência formado no Hospital de Clínicas de Porto Alegre, com doutorado em Psiquiatria pelo programa tripartite UFRGS, USP e UNIFESP. Professor do Departamento de Psiquiatria da FMUSP, pesquisa epidemiologia e neurobiologia dos transtornos mentais, com foco no TDAH.</p>
+          <li class="person reveal" id="p-arthur-caye">
+            <button type="button" class="p-btn" aria-haspopup="dialog"><img src="fotos/arthur-caye.jpg" alt="" width="150" height="150" loading="lazy"><b>Arthur Caye</b><span class="p-role">Coordenador geral</span><span class="p-more">Ver currículo<svg class="ic" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="M12 5v14" /></svg></span></button>
+            <div class="p-cv"><div class="p-txt"><p>Médico psiquiatra da infância e da adolescência e Professor Doutor do Departamento de Psiquiatria da FMUSP, onde coordena o GRAPAL. É orientador nos programas de pós-graduação em Psiquiatria da USP e da UFRGS.</p><p class="p-links"><a href="https://scholar.google.com/citations?user=5JjL-JcAAAAJ" target="_blank" rel="noopener">Google Scholar<svg class="ic" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M15 3h6v6" /><path d="M10 14 21 3" /><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /></svg></a></p></div></div>
           </li>
-          <li class="person reveal d1">
-            <img src="fotos/bianca-brunelli-eduardo.jpg" alt="" width="112" height="112" loading="lazy">
-            <div class="p-head"><b>Bianca Brunelli Eduardo</b><span class="p-role">Coordenadora clínica</span><span class="p-reg">CRM-SP 175734 · RQE 80085</span></div>
-            <p class="p-bio">Formada em Medicina pela FMUSP (2015), fez residência em Psiquiatria no IPq-HCFMUSP (2016 a 2019), onde também foi preceptora da residência e supervisora do Ambulatório de Interconsultas. Foi psiquiatra do GRAPAL de 2020 a 2023 e é coordenadora clínica desde maio de 2026. Tem formação em Terapia Cognitivo-Comportamental (CETCC) e pós-graduação em Psicofarmacologia Avançada e Farmacogenética (USJT) e em Medicina do Sono (Hospital Israelita Albert Einstein).</p>
+          <li class="person reveal d1" id="p-bianca-brunelli-eduardo">
+            <button type="button" class="p-btn" aria-haspopup="dialog"><img src="fotos/bianca-brunelli-eduardo.jpg" alt="" width="150" height="150" loading="lazy"><b>Bianca Brunelli Eduardo</b><span class="p-role">Coordenadora clínica</span><span class="p-more">Ver currículo<svg class="ic" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="M12 5v14" /></svg></span></button>
+            <div class="p-cv"><span class="p-reg">CRM-SP 175734 · RQE 80085</span><div class="p-txt"><p>Formada em Medicina pela FMUSP (2015), fez residência em Psiquiatria no IPq-HCFMUSP (2016 a 2019), onde também foi preceptora da residência e supervisora do Ambulatório de Interconsultas. Foi psiquiatra do GRAPAL de 2020 a 2023 e é coordenadora clínica desde maio de 2026. Tem formação em Terapia Cognitivo-Comportamental (CETCC) e pós-graduação em Psicofarmacologia Avançada e Farmacogenética (USJT) e em Medicina do Sono (Hospital Israelita Albert Einstein).</p></div></div>
           </li>
-          <li class="person reveal">
-            <img src="fotos/rodrigo-alves-rocha.jpg" alt="" width="112" height="112" loading="lazy">
-            <div class="p-head"><b>Rodrigo Alves Rocha</b><span class="p-role">Coordenador administrativo</span></div>
+          <li class="person reveal d2" id="p-rodrigo-alves-rocha">
+            <button type="button" class="p-btn" aria-haspopup="dialog"><img src="fotos/rodrigo-alves-rocha.jpg" alt="" width="150" height="150" loading="lazy"><b>Rodrigo Alves da Rocha</b><span class="p-role">Coordenador administrativo</span><span class="p-more">Ver currículo<svg class="ic" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="M12 5v14" /></svg></span></button>
+            <div class="p-cv"><div class="p-txt"><p>Formado em Ciências Biológicas pelas Faculdades Metropolitanas Unidas (FMU), com aprimoramento em Bacteriologia em Saúde Pública pelo Instituto Adolfo Lutz e formação técnica em Produção Gráfica pelo Senac. Está no GRAPAL desde 2018, na área administrativa, onde cuida do controle administrativo, da agenda de médicos e psicólogos, do atendimento aos alunos (orientações e agendamentos), do apoio em RH e da organização dos fluxos administrativos do serviço.</p></div></div>
           </li>
-          <li class="person reveal d1">
-            <img src="fotos/eduardo-de-castro-humes.jpg" alt="" width="112" height="112" loading="lazy">
-            <div class="p-head"><b>Eduardo de Castro Humes</b><span class="p-role">Conselheiro</span></div>
-          </li>
+          <li class="person reveal d3" id="p-eduardo-de-castro-humes"><div class="p-btn"><img src="fotos/eduardo-de-castro-humes.jpg" alt="" width="150" height="150" loading="lazy"><b>Eduardo de Castro Humes</b><span class="p-role">Conselheiro</span></div></li>
         </ul>
         <p class="group-k reveal">Equipe assistencial</p>
         <ul class="people">
-          <li class="person reveal">
-            <img src="fotos/anne-caroline-dias-silva.jpg" alt="" width="112" height="112" loading="lazy">
-            <div class="p-head"><b>Anne Caroline Dias Silva</b><span class="p-role">Psiquiatra</span><span class="p-reg">CRM-SP 168293</span></div>
-            <p class="p-bio">Médica psiquiatra formada pela FMUSP. No IPq-HCFMUSP, atua no Ambulatório de Impulso Sexual Excessivo e Prevenção dos Desfechos Negativos associados ao Comportamento Sexual (AISEP) e no Programa de Assistência Multiprofissional à Violência Doméstica (PROVID). É psiquiatra assistente do GRAPAL.</p>
+          <li class="person reveal" id="p-anne-caroline-dias-silva">
+            <button type="button" class="p-btn" aria-haspopup="dialog"><img src="fotos/anne-caroline-dias-silva.jpg" alt="" width="150" height="150" loading="lazy"><b>Anne Caroline Dias Silva</b><span class="p-role">Psiquiatra</span><span class="p-more">Ver currículo<svg class="ic" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="M12 5v14" /></svg></span></button>
+            <div class="p-cv"><span class="p-reg">CRM-SP 168293</span><div class="p-txt"><p>Médica psiquiatra formada pela FMUSP. No IPq-HCFMUSP, atua no Ambulatório de Impulso Sexual Excessivo e Prevenção dos Desfechos Negativos associados ao Comportamento Sexual (AISEP) e no Programa de Assistência Multiprofissional à Violência Doméstica (PROVID). É psiquiatra assistente do GRAPAL.</p></div></div>
           </li>
-          <li class="person reveal d1">
-            <img src="fotos/lucas-ito-suguikawa.jpg" alt="" width="112" height="112" loading="lazy">
-            <div class="p-head"><b>Lucas Ito Suguikawa</b><span class="p-role">Psiquiatra</span></div>
+          <li class="person reveal d1" id="p-lucas-ito-suguikawa"><div class="p-btn"><img src="fotos/lucas-ito-suguikawa.jpg" alt="" width="150" height="150" loading="lazy"><b>Lucas Ito Suguikawa</b><span class="p-role">Psiquiatra</span></div></li>
+          <li class="person reveal d2" id="p-marina-gordon">
+            <button type="button" class="p-btn" aria-haspopup="dialog"><img src="fotos/marina-gordon.jpg" alt="" width="150" height="150" loading="lazy"><b>Marina Gordon</b><span class="p-role">Psiquiatra</span><span class="p-more">Ver currículo<svg class="ic" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="M12 5v14" /></svg></span></button>
+            <div class="p-cv"><span class="p-reg">CRM-SP 140781</span><div class="p-txt"><p>Formada em Medicina pela FMUSP, fez residência em Psiquiatria no Hospital das Clínicas da FMUSP, com especialização em Psiquiatria da Infância e da Adolescência na mesma instituição. Está no GRAPAL desde março de 2024.</p></div></div>
           </li>
-          <li class="person reveal">
-            <img src="fotos/marina-gordon.jpg" alt="" width="112" height="112" loading="lazy">
-            <div class="p-head"><b>Marina Gordon</b><span class="p-role">Psiquiatra</span><span class="p-reg">CRM-SP 140781</span></div>
-            <p class="p-bio">Formada em Medicina pela FMUSP, fez residência em Psiquiatria no Hospital das Clínicas da FMUSP, com especialização em Psiquiatria da Infância e da Adolescência na mesma instituição. Está no GRAPAL desde março de 2024.</p>
+          <li class="person reveal d3" id="p-thais-cristina-goncalves-barbieri"><div class="p-btn"><img src="fotos/thais-cristina-goncalves-barbieri.jpg" alt="" width="150" height="150" loading="lazy"><b>Thaís Cristina Gonçalves Barbieri</b><span class="p-role">Psiquiatra</span></div></li>
+          <li class="person reveal" id="p-thiago-izumi">
+            <button type="button" class="p-btn" aria-haspopup="dialog"><img src="fotos/thiago-izumi.jpg" alt="" width="150" height="150" loading="lazy"><b>Thiago Izumi</b><span class="p-role">Psiquiatra</span><span class="p-more">Ver currículo<svg class="ic" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="M12 5v14" /></svg></span></button>
+            <div class="p-cv"><div class="p-txt"><p>Ex-aluno da FMUSP, onde fez residência em Psiquiatria. Psicanalista, com formação no Instituto Sedes Sapientiae. Psiquiatra do GRAPAL desde novembro de 2024.</p></div></div>
           </li>
-          <li class="person reveal d1">
-            <img src="fotos/thais-cristina-goncalves-barbieri.jpg" alt="" width="112" height="112" loading="lazy">
-            <div class="p-head"><b>Thaís Cristina Gonçalves Barbieri</b><span class="p-role">Psiquiatra</span></div>
+          <li class="person reveal d1" id="p-natalia-de-oliveira-giotto">
+            <button type="button" class="p-btn" aria-haspopup="dialog"><img src="fotos/natalia-de-oliveira-giotto.jpg" alt="" width="150" height="150" loading="lazy"><b>Natália de Oliveira Giotto</b><span class="p-role">Psicóloga</span><span class="p-more">Ver currículo<svg class="ic" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="M12 5v14" /></svg></span></button>
+            <div class="p-cv"><div class="p-txt"><p>Psicóloga formada pela Universidade Presbiteriana Mackenzie (2015), com especialização em Psicologia Clínica e Hospitalar em Cardiologia pelo InCor-HCFMUSP (2016) e em Gestalt-terapia Clínica e Institucional pela Universidade Cruzeiro do Sul (2019). Está no GRAPAL desde julho de 2023.</p></div></div>
           </li>
-          <li class="person reveal">
-            <img src="fotos/thiago-izumi.jpg" alt="" width="112" height="112" loading="lazy">
-            <div class="p-head"><b>Thiago Izumi</b><span class="p-role">Psiquiatra</span></div>
-            <p class="p-bio">Ex-aluno da FMUSP, onde fez residência em Psiquiatria. Psicanalista, com formação no Instituto Sedes Sapientiae. Psiquiatra do GRAPAL desde novembro de 2024.</p>
+          <li class="person reveal d2" id="p-thamires-nunes-nascimento">
+            <button type="button" class="p-btn" aria-haspopup="dialog"><img src="fotos/thamires-nunes-nascimento.jpg" alt="" width="150" height="150" loading="lazy"><b>Thamires Nunes Nascimento</b><span class="p-role">Psicóloga</span><span class="p-more">Ver currículo<svg class="ic" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="M12 5v14" /></svg></span></button>
+            <div class="p-cv"><div class="p-txt"><p>Psicóloga formada pela Universidade Cruzeiro do Sul (Unicsul), com pós-graduação em Terapia Cognitivo-Comportamental (CETCC) e formação em DBT. Atende crianças, adolescentes e adultos na abordagem cognitivo-comportamental e tem experiência em atendimento familiar.</p></div></div>
           </li>
-          <li class="person reveal d1">
-            <img src="fotos/natalia-de-oliveira-giotto.jpg" alt="" width="112" height="112" loading="lazy">
-            <div class="p-head"><b>Natália de Oliveira Giotto</b><span class="p-role">Psicóloga</span></div>
-            <p class="p-bio">Psicóloga formada pela Universidade Presbiteriana Mackenzie (2015), com especialização em Psicologia Clínica e Hospitalar em Cardiologia pelo InCor-HCFMUSP (2016) e em Gestalt-terapia Clínica e Institucional pela Universidade Cruzeiro do Sul (2019). Está no GRAPAL desde julho de 2023.</p>
-          </li>
-          <li class="person reveal">
-            <img src="fotos/thamires-nunes-nascimento.jpg" alt="" width="112" height="112" loading="lazy">
-            <div class="p-head"><b>Thamires Nunes Nascimento</b><span class="p-role">Psicóloga</span></div>
-            <p class="p-bio">Psicóloga formada pela Universidade Cruzeiro do Sul (Unicsul), com pós-graduação em Terapia Cognitivo-Comportamental (CETCC) e formação em DBT. Atende crianças, adolescentes e adultos na abordagem cognitivo-comportamental e tem experiência em atendimento familiar.</p>
-          </li>
-          <li class="person reveal d1">
-            <img src="fotos/suzane-brunhara-dos-santos.jpg" alt="" width="112" height="112" loading="lazy">
-            <div class="p-head"><b>Suzane Brunhara dos Santos</b><span class="p-role">Enfermeira</span></div>
-            <p class="p-bio">Enfermeira formada pela Faculdade das Américas (FAM), com especialização em Enfermagem em Clínica Médica pelo Centro Universitário São Camilo e em Saúde Mental e Psiquiatria pelo IPq-HCFMUSP. Atua no GRAPAL desde outubro de 2024 e no Centro de Atenção ao Colaborador (CeAC) do HCFMUSP desde julho de 2024.</p>
+          <li class="person reveal d3" id="p-suzane-brunhara-dos-santos">
+            <button type="button" class="p-btn" aria-haspopup="dialog"><img src="fotos/suzane-brunhara-dos-santos.jpg" alt="" width="150" height="150" loading="lazy"><b>Suzane Brunhara dos Santos</b><span class="p-role">Enfermeira</span><span class="p-more">Ver currículo<svg class="ic" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="M12 5v14" /></svg></span></button>
+            <div class="p-cv"><div class="p-txt"><p>Enfermeira formada pela Faculdade das Américas (FAM), com especialização em Enfermagem em Clínica Médica pelo Centro Universitário São Camilo e em Saúde Mental e Psiquiatria pelo IPq-HCFMUSP. Atua no GRAPAL desde outubro de 2024 e no Centro de Atenção ao Colaborador (CeAC) do HCFMUSP desde julho de 2024.</p></div></div>
           </li>
         </ul>
         <p class="note reveal">Fundador: Paulo Vaz de Arruda (in memoriam).</p>
+        <dialog class="cv" id="cv" aria-labelledby="cv-nome">
+          <div class="cv-in">
+            <button type="button" class="cv-close" aria-label="Fechar"><svg class="ic" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></button>
+            <div class="cv-top">
+              <span class="cv-foto"></span>
+              <div><h3 class="cv-nome" id="cv-nome"></h3><p class="cv-role"></p><p class="cv-reg"></p></div>
+            </div>
+            <div class="cv-bio"></div>
+          </div>
+        </dialog>
       </div>
     </section>
 
@@ -581,6 +574,6 @@
     </div>
   </footer>
 
-  <script src="assets/site.js" defer></script>
+  <script src="assets/site.js?v=a01ad8e4" defer></script>
 </body>
 </html>
