@@ -130,4 +130,28 @@
   } else if (cv) {
     semJanela(null);
   }
+
+  /* ---------- queremos te ouvir: envia a mensagem para o e-mail da coordenação ----------
+     O formulário manda os campos para um script do Google (endereço em action), que os encaminha por e-mail.
+     Nada fica guardado no site. */
+  var form = document.getElementById('form-ouvir');
+  if (form && window.fetch && window.FormData && window.URLSearchParams) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var st = form.querySelector('.form-status'), bt = form.querySelector('button[type="submit"]');
+      var dados = new URLSearchParams(new FormData(form));
+      if (!(dados.get('mensagem') || '').trim()) {
+        st.textContent = 'Escreva sua mensagem antes de enviar.'; st.className = 'form-status erro'; return;
+      }
+      bt.disabled = true; st.textContent = 'Enviando…'; st.className = 'form-status';
+      fetch(form.action, { method: 'POST', mode: 'no-cors', body: dados })
+        .then(function () {
+          form.reset();
+          st.textContent = 'Mensagem enviada. Obrigado por nos ajudar a melhorar o GRAPAL.'; st.className = 'form-status ok';
+        }, function () {
+          st.textContent = 'Não foi possível enviar agora. Tente de novo em alguns minutos.'; st.className = 'form-status erro';
+        })
+        .then(function () { bt.disabled = false; });
+    });
+  }
 })();
