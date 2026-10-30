@@ -82,4 +82,52 @@
   }
   atualiza();
   setInterval(atualiza, 60000);
+
+  /* ---------- equipe: mini currículo em janela ----------
+     Clicar na foto ou no nome abre a janela com o texto de .p-cv daquela pessoa.
+     Sem suporte a <dialog>, os currículos ficam visíveis na própria página. */
+  var cv = document.getElementById('cv');
+  function semJanela(li) {  // navegador sem <dialog>: currículos ficam na própria página
+    document.documentElement.classList.add('no-dialog');
+    if (li) li.scrollIntoView({ block: 'center' });
+  }
+  // Em visualizações que mostram a página inteira sem rolagem (moldura com a altura da página),
+  // a janela abre perto de onde se clicou, e não no meio da página.
+  function posiciona(origem) {
+    var alta = window.innerHeight > ((window.screen && screen.height) || 1200) * 1.3;
+    var r = alta && origem ? origem.getBoundingClientRect() : null;
+    cv.style.top = r ? Math.max(16, r.top - 40) + 'px' : '';
+    cv.style.bottom = r ? 'auto' : '';
+    cv.style.marginTop = r ? '0' : '';
+  }
+  function abre(li, origem) {
+    var b = li.querySelector('button.p-btn'), r = li.querySelector('.p-reg'), img = b.querySelector('img').cloneNode(false);
+    img.removeAttribute('loading');
+    var foto = cv.querySelector('.cv-foto'), reg = cv.querySelector('.cv-reg');
+    foto.innerHTML = ''; foto.appendChild(img);
+    cv.querySelector('.cv-nome').textContent = b.querySelector('b').textContent;
+    cv.querySelector('.cv-role').textContent = b.querySelector('.p-role').textContent;
+    reg.textContent = r ? r.textContent : ''; reg.hidden = !r;
+    cv.querySelector('.cv-bio').innerHTML = li.querySelector('.p-txt').innerHTML;
+    posiciona(origem || b);
+    try { cv.showModal(); } catch (err) { semJanela(li); }
+  }
+  if (cv && typeof cv.showModal === 'function') {
+    // cartões da seção Equipe
+    document.querySelectorAll('.person').forEach(function (li) {
+      var b = li.querySelector('button.p-btn');
+      if (b) b.addEventListener('click', function () { abre(li, b); });
+    });
+    // rostos do início: quem tem currículo abre a janela; os demais levam ao cartão na seção Equipe
+    document.querySelectorAll('.faces-grid .face').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var li = document.getElementById(a.getAttribute('href').slice(1));
+        if (li && li.querySelector('.p-cv')) { e.preventDefault(); abre(li, a); }
+      });
+    });
+    cv.querySelector('.cv-close').addEventListener('click', function () { cv.close(); });
+    cv.addEventListener('click', function (e) { if (e.target === cv) cv.close(); });  // clique fora da janela
+  } else if (cv) {
+    semJanela(null);
+  }
 })();
