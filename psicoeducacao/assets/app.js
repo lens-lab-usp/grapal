@@ -36,6 +36,17 @@
     filterArticles();
   }));
   if (cards.length) filterArticles();
+  document.querySelectorAll('[data-print-page]').forEach(button => button.addEventListener('click', () => window.print()));
+  document.querySelectorAll('[data-copy-link]').forEach(button => button.addEventListener('click', async () => {
+    const status = document.querySelector('[data-copy-status]');
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(window.location.href);
+      if (status) status.textContent = 'Link copiado. Você pode compartilhar com quem quiser.';
+    } catch {
+      if (status) status.textContent = 'Copie o endereço na barra do navegador para compartilhar.';
+    }
+  }));
   const form = document.querySelector('[data-tool-form]');
   if (form) {
     form.addEventListener('submit', e => e.preventDefault());
