@@ -8,6 +8,18 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  /* ---------- marca da FMUSP no cabeçalho ----------
+     Fica recolhida enquanto a marca grande do início está na tela e aparece quando ela sai de vista.
+     Sem JavaScript, a marca do cabeçalho aparece sempre. */
+  var marcaCapa = document.querySelector('.capa-marca');
+  if (head && marcaCapa && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entradas) {
+      head.classList.toggle('sem-marca', entradas[entradas.length - 1].isIntersecting);
+    }, { rootMargin: '-' + head.offsetHeight + 'px 0px 0px 0px' }).observe(marcaCapa);
+  } else if (head) {
+    head.classList.remove('sem-marca');
+  }
+
   var reduz = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- aparecer ao rolar ---------- */
