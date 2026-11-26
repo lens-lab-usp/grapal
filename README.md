@@ -2,10 +2,11 @@
 
 Site do GRAPAL (Grupo de Assistência Psicológica ao Aluno), serviço de saúde mental da
 Faculdade de Medicina da Universidade de São Paulo. O conteúdo segue os manuais do serviço
-(Manual do Aluno e Manual do Residente, versão 1.000), e a identidade visual é a mesma dos
-manuais e do Manual da Marca FMUSP.
+(Manual do Aluno e Manual do Residente, versão 1.000), e a identidade visual segue o Manual
+da Marca FMUSP (ver "Identidade visual", abaixo).
 
-Endereço: **https://grapal.fm.usp.br** (publicado pelo GitHub Pages).
+Endereço: **https://lens.fm.usp.br/grapal/** (publicado pelo GitHub Pages). O endereço próprio
+`grapal.fm.usp.br` ainda depende do registro de DNS (ver "Endereço próprio", abaixo).
 
 ## Estrutura
 
@@ -29,12 +30,47 @@ usadas em links diretos:
 | Queremos te ouvir (formulário de opinião) | `/#ouvir` |
 
 Outros arquivos: `assets/site.css` (aparência), `assets/site.js` (comportamento),
-`assets/fonts/` (fontes), `fotos/` (equipe, 320 × 320 px), `manuais/` (PDFs),
-`404.html` (endereço não encontrado).
+`assets/marca-fmusp.png` e `assets/marca-fmusp-branca.png` (marca da FMUSP), `fotos/` (equipe,
+320 × 320 px), `manuais/` (PDFs), `404.html` (endereço não encontrado) e `psicoeducacao/`
+(área de psicoeducação, com páginas e estilos próprios).
 
 O site é HTML, CSS e um pouco de JavaScript, sem bibliotecas, sem banco de dados e sem nenhum
 recurso de fora (só o formulário de opinião envia a mensagem para o Google, ver abaixo). **Não usa cookies e não coleta dados de quem visita.** Sem JavaScript, todo o
 conteúdo continua aparecendo; só deixam de funcionar a animação e o destaque "Agora" da urgência.
+
+## Identidade visual
+
+O site segue o Manual da Marca FMUSP (2017), publicado em
+`https://www.fm.usp.br/imt/conteudo/manual_marca_fmusp_oficial_2017.pdf`.
+
+**Marca.** `assets/marca-fmusp.png` (verde-escuro) e `assets/marca-fmusp-branca.png` (negativo,
+usada sobre o triângulo do rodapé). Para trocar pelo arquivo oficial da Comunicação, suba os novos
+com esses mesmos nomes, em PNG de fundo transparente e na proporção original (largura igual a duas
+vezes a altura). A marca não é recortada nem recolorida, e nada fica a menos de uma altura do "M"
+de MEDICINA de distância dela.
+
+**Tipografia.** A fonte da FMUSP é a FF Unit Slab; o manual indica a Lucida Sans quando ela não
+está disponível. O site pede as duas nessa ordem (variável `--font`, em `assets/site.css`): quem
+tem a FF Unit Slab instalada vê o site com ela, e os demais veem a Lucida Sans (no Mac, a mesma
+letra se chama Lucida Grande). Celulares não trazem nenhuma das duas: o iPhone usa a Verdana, de
+desenho próximo, e o Android, a fonte padrão do aparelho. Para a FF Unit Slab aparecer para todo
+mundo é preciso publicar os arquivos da fonte junto com o site (regra `@font-face`), o que depende
+de a licença da FMUSP permitir o uso na web.
+
+**Triângulos.** São os dois do manual: o de 39°, em verde-escuro, sempre na frente, e o de 26°,
+em verde-água. Na capa (seção Início) a marca fica centrada na vertical que passa pelo ponto em
+que os dois se cruzam. Os ângulos estão fixos no CSS (0,8098 e 0,4877 são as tangentes de 39° e
+de 26°) e não devem ser alterados; tamanho e posição se ajustam pelas variáveis `--T`, `--yi` e
+`--marca` da regra `.hero`. O triângulo de 26° em verde-escuro se repete no canto superior
+direito das seções de fundo claro e no canto inferior esquerdo do rodapé, onde leva a marca em
+negativo. As caixas de destaque têm o canto cortado das caixas do próprio manual.
+
+**Cores.** Verde-escuro Pantone 342 C (`#006747`) e verde-água Pantone 320 C (`#009ca6`). Das
+complementares, azul-marinho 3025 C na residência, vermelho 200 C na urgência e laranja 1375 C
+nos avisos.
+
+A área `psicoeducacao/` segue as mesmas regras; o que é próprio da identidade está em
+`psicoeducacao/assets/identidade-fmusp.css`.
 
 ## Como alterar
 
@@ -49,7 +85,7 @@ contato, caixa "Para quem está preocupado" e rodapé). Use a busca no arquivo p
 pelo e-mail e altere todas as ocorrências. O link do WhatsApp tem o formato
 `https://wa.me/5511987440393`.
 
-**Equipe.** Cada pessoa aparece em dois lugares de `index.html`: no mosaico de fotos do início
+**Equipe.** Cada pessoa aparece em dois lugares de `index.html`: na fileira de fotos do início
 (bloco `faces-grid`) e na seção Equipe (listas `people`). Suba a foto em `fotos/` (quadrada,
 de preferência 320 × 320 px, nome em minúsculas e sem acento, como `nome-sobrenome.jpg`) e copie
 um item existente nos dois lugares, trocando arquivo, nome e função. Na seção Equipe, quem tem
@@ -151,8 +187,12 @@ A ordem importa. **Só depois** que a TI confirmar o registro:
 Se o domínio for configurado antes de o registro existir, o endereço do GitHub passa a
 redirecionar para um domínio que ainda não responde, e o site fica fora do ar até o DNS ser criado.
 
+Quando o endereço próprio estiver funcionando, troque `https://lens.fm.usp.br/grapal/` por
+`https://grapal.fm.usp.br/` nas duas linhas `og:url` e `og:image` do começo de `index.html`: é por
+elas que o WhatsApp e outros aplicativos montam a prévia do link.
+
 ## Licenças
 
-As fontes Zilla Slab (Mozilla Foundation) e Source Sans 3 (Adobe) são distribuídas sob a SIL
-Open Font License 1.1; os textos das licenças estão em `assets/fonts/`. Os ícones são do
-conjunto Lucide (licença ISC), com o texto da licença em `assets/LICENCA-icones-lucide-ISC.txt`.
+O site não publica arquivos de fonte: usa as que já estão no aparelho de quem visita (ver
+"Identidade visual"). Os ícones são do conjunto Lucide (licença ISC), com o texto da licença em
+`assets/LICENCA-icones-lucide-ISC.txt`. A marca "Medicina USP" pertence à FMUSP.
